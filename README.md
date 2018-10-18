@@ -1,4 +1,4 @@
-# auditing-toolkit
+# Auditing Toolkit
 An Open Source auditing tool, developed as proof of concept for my graduation research assignment. 
 
 ## Research assignment
