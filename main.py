@@ -1,10 +1,14 @@
-import click
 import packages
+try:
+    import click
+except (ModuleNotFoundError,ImportError,ImportWarning):
+    packages.install("click")
+    import click
+
 from network import nmapscan
 
 @click.group()
 def main():
-    packages.install()
     pass
 
 @main.command()

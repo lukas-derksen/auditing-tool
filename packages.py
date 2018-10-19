@@ -1,5 +1,4 @@
 import subprocess
 
-def install():
-    subprocess.run(['pip', 'install', 'nmap'])
-    subprocess.run(['pip', 'install', 'click'])
+def install(package):
+    subprocess.run(['pip', 'install', package])
