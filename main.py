@@ -5,7 +5,7 @@ except (ModuleNotFoundError,ImportError,ImportWarning):
     packages.install("click")
     import click
 
-from network import nmapscan
+from network import nmapscan, msf
 
 @click.group()
 def main():
@@ -16,6 +16,7 @@ def main():
 def network(host):
     print("Start network scanning")
     nmapscan.initiate(host)
+    msf.initiate()
 
 @main.command()
 def webapp():

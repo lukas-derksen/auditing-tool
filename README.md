@@ -6,7 +6,12 @@ The company I work for as an intern wanted me to research the possibility of rep
 
 ## Tools used in this toolkit
 
-### Nmap
+### Network audit tool
+
+#### Nmap
 As a reconnaissance tool, I have chosen to use `Nmap`. It has always served me well during CTFs to identify any services that might be interesting for exploitation. During my research, I have seen Metasploit Pro uses it as well to indicate what vulnerabilities might be present within the target. This has lead me to also incorporate `Nmap` into my toolkit. 
+
+#### Metasploit
+Once `Nmap` has retrieved details about the target, the tool will look for exploits using `Metasploit`. These will be automatically executed, as to confirm if the services are truly vulnerable. This will all be logged within the terminal and will also be written in the `Markdown` report afterwards. 
 
 _More to come_
