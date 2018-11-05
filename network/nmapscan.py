@@ -12,9 +12,9 @@ def initiate(host):
     print('Scanning host ' + host)
     nm = nmap.PortScanner()
     nm.scan(hosts=host, arguments='-Pn -sR -sC -T4 --osscan-guess --fuzzy')
-    analyze(nm._scan_result)
+    return analyze(nm._scan_result)
 
-
+# data dict of nmap scan result
 def analyze(data):
     try:
         print('Scanned: ' + data['nmap']['command_line'])
@@ -29,7 +29,14 @@ def analyze(data):
             for port in data['scan'][ip]['tcp']:
                 print(str(port) + ' ' + data['scan'][ip]['tcp'][port]['state'] + ' ' + data['scan'][ip]['tcp'][port]['name'])
                 services[ip][port] = [data['scan'][ip]['tcp'][port]['state'],data['scan'][ip]['tcp'][port]['product'], data['scan'][ip]['tcp'][port]['version']]
-                
+                # services : {
+                #   ip : {
+                #     port : [state, product, version],
+                #     port : [state, product, version],
+                #     etc
+                #   }
+                # }
+        return services
 
     except:
         print('Analyzing Nmap data failed.')

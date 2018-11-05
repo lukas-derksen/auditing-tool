@@ -15,8 +15,8 @@ def main():
 @click.option('-h', '--host')
 def network(host):
     print("Start network scanning")
-    nmapscan.initiate(host)
-    msf.initiate()
+    data = nmapscan.initiate(host)
+    msf.initiate(data)
 
 @main.command()
 def webapp():
