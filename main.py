@@ -1,3 +1,4 @@
+import sys
 import packages
 try:
     import click
@@ -16,6 +17,9 @@ def main():
 def network(host):
     print("Start network scanning")
     data = nmapscan.initiate(host)
+    if data is None:
+        print('Nmap scan returned no open ports.')
+        sys.exit()
     msf.initiate(data)
 
 @main.command()

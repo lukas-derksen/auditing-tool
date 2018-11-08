@@ -1,6 +1,7 @@
 import packages
 from network import msfrpc
 import time
+import sys
 
 # Object for the msfrpc client
 client = None
@@ -16,7 +17,7 @@ def initiate(data):
         client = msfrpc.Client(ip,user,passwd)
     except:
         print('msfrpc session failed. Did you load the msgrpc plugin and set the password accordingly?')
-    
+        sys.exit(1)
     for target in data:
         find_exploits(data[target], target)
 
@@ -31,26 +32,54 @@ def find_exploits(data, target):
     client.read_console(con_id)
     # print(client.run_module())
     for port in data:
-        if data[port][0] == 'closed' or data[port][1] == '':
+        if (port == 'os'):
             continue
         service = data[port][1]
         version = data[port][2]
+        os = data['os']
+        if data[port][0] == 'closed' or service == '':
+            continue
 
-        print('Searching exploits for ' + service + ' ' + version)
+        print("Searching exploits for {0} {1}".format(service, version))
         client.read_console(con_id)
-        search = "search {0} {1}".format(service, version)
+        search = "search {0} {1} {2}".format(service, version, os)
         client.write_console(con_id, search)
 
         # Sleep 1 second for Metasploit to load relevant exploits
         time.sleep(1)
         res = client.read_console(con_id)
-        print(res)
+        # print(res)
+        exploits = analyze(target, res, os)
+        for exp in exploits:
+            exploit(target, port, exp)
+    client.destroy_console(con_id)
 
-    for i in range(0,con_id):
-        client.destroy_console(i)
+def normalize_exploits(exp):
+    toprint = exp[b'data']
+    lines = toprint.decode().split('\n')
+    ret = []
+    for line in lines:
+        # if not (line == '' or '-----' in line or '=======' in line or 'Matching Modules' in line or 'Disclosure Date' in line):
+        if not (all(x in line for x in ['', '-----', '=======', 'Matching Modules', 'Disclosure Date'])):
+            ret.append(line)
+    return ret
+
+def analyze(target, exp, os):
+    lines = normalize_exploits(exp)
+    ret = []
+    # print('\n\n\n\n')
+    for line in lines:
+        # if not ('exploit' in line or 'excellent' in line):
+        # if (all(x in line for x in ['exploit', 'excellent', 'good'])) and any(x in line for x in [os,'multi']):
+        if('exploit' in line and any(x in line for x in ['excellent', 'good']) and any(x in line for x in [os,'multi'])):
+            name = line.strip().split(' ', 1)[0].split('/')[-1]
+            ret.append(name)
+            print(line)
+    return ret
 
 # target: ip address of current target
 # port: port for current exploit
-# exploit: data dict of current exploit
-def exploit(target, port, exploit):
+# exploit: Name of current exploit
+def exploit(target, port,exploit):
+    #client.run_module('exploit', exploit, target, port)
     pass

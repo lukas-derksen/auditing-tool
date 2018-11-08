@@ -178,7 +178,7 @@ class Client(object):
 # this if statement is for testing funtions inside of auth
 # only put tests here
 if __name__ == "__main__":
-    auth = Client("127.0.0.1","msf","yFdkc6fB") # Change password accordingly to random generated (or user-given) password from msgrpc 
+    auth = Client("127.0.0.1","msf","msfmsf") # Change password accordingly to random generated (or user-given) password from msgrpc 
     print(auth.get_version())
     print(auth.list_consoles())
     print(auth.create_console())
