@@ -7,7 +7,6 @@ def initialize(host):
 
 
 def analyze(data):
-    # data = data[0].decode('ascii')
     data = re.split('\n |\r', data[0].decode('ascii'))
     links = []
     for line in data:

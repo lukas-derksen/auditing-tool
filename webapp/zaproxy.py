@@ -7,12 +7,15 @@ zap = ZAPv2(apikey=key)
 
 def initialize(host):
     # zap = ZAPv2(apikey=key)
-    zap.urlopen(host)
-    sleep(2)
-    spider(host)
-    passive_scan()
-    active_scan(host)
-    return get_alerts()
+    try:
+        zap.urlopen(host)
+        sleep(2)
+        spider(host)
+        passive_scan()
+        active_scan(host)
+        return get_alerts()
+    except:
+        print('WARNING: Make sure Zaproxy is running in Daemon mode with the designated key: {0}'.format(key))
 
 def spider(host):
     scanid = zap.spider.scan(host)

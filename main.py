@@ -35,10 +35,12 @@ def webapp(host):
     print("Started webapp scanning")
     whatweb.initiate(host)
     links = dirb.initialize(host)
+    print(links)
     zaproxy.initialize(host)
     for link in links:
         if bruteforce.check_login_form(links):
             print(link)
+            # Bruteforce these links manually with hydra or BurpSuite
 
 if __name__ == "__main__":
     main()

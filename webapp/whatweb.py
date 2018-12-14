@@ -1,5 +1,6 @@
 import subprocess
 
+# Change to location of fuzzdb
 fuzzdb = '/home/lukas/Documents/School/Afstuderen/gitrepos/fuzzdb'
 
 def initiate(host):
