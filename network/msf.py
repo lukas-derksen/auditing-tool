@@ -51,8 +51,8 @@ def find_exploits(data, target, host):
         res = client.read_console(con_id)
         # print(res)
         exploits = analyze(target, res, os)
-        for exp in exploits:
-            exploit(target, port, exp, host)
+        # for exp in exploits:
+            # exploit(target, port, exp, host)
     client.destroy_console(con_id)
 
 def normalize_exploits(exp):

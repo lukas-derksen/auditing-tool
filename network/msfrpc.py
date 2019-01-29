@@ -58,7 +58,7 @@ class Client(object):
         print(res)
         if res[b'result'] == b'success':
             self.token = res[b'token']
-            print("Token recived:> %s",self.token)
+            print("Token received:> %s",self.token)
         else:
             print("Authentication failed")
             sys.exit()

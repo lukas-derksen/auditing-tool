@@ -17,6 +17,10 @@ def main():
 @main.command()
 @click.option('-h', '--host')
 def network(host):
+    # Workaround for demo purposes. Network scan doesn't work with http://
+    if "http" in host:
+        host = host[host.index('://')+3:]
+        print(host)
     print("Start network scanning")
     data = nmapscan.initiate(host)
     if data is None:
