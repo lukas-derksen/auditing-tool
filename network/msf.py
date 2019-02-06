@@ -3,16 +3,21 @@ from network import msfrpc
 import time
 import sys
 import socket
+import json
+from pathlib import Path
+
+with open(Path('../config.json'), 'r') as f:
+    config = json.load(f)
 
 # Object for the msfrpc client
 client = None
 
 def initiate(data,host):
     print('Initiating msfrpc session')
-    ip = "127.0.0.1"
-    user = "msf"
-    # Change this password if you've entered a custom password for msfrpc
-    passwd = "msfmsf"
+    ip = config['MSFRPC']['ip']
+    user = config['MSFRPC']['username']
+    passwd = config['MSFRPC']['password']
+    
     try:
         global client
         client = msfrpc.Client(ip,user,passwd)

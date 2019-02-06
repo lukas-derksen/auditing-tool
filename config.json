@@ -1,0 +1,14 @@
+{
+    "MSFRPC": {
+        "ip": "127.0.0.1",
+        "username": "msf",
+        "password": "msfmsf"
+    },
+    "FuzzDB": {
+
+        "fuzzDBLocation": "/home/lukas/Documents/School/Afstuderen/gitrepos/fuzzdb"
+    },
+    "ZAProxy": {
+        "key": "change-me-1337"
+    }
+}

@@ -1,8 +1,13 @@
 from time import sleep
 from pprint import pprint
 from zapv2 import ZAPv2
+import json
+from pathlib import Path
 
-key = 'change-me-1337'
+with open(Path('../config.json'), 'r') as f:
+    config = json.load(f)
+
+key = config['ZAProxy']['key']
 zap = ZAPv2(apikey=key)
 
 def initialize(host):

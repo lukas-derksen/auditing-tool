@@ -1,7 +1,11 @@
 import subprocess
+import json
+from pathlib import Path
 
-# Change to location of fuzzdb
-fuzzdb = '/home/lukas/Documents/School/Afstuderen/gitrepos/fuzzdb'
+with open(Path('../config.json'), 'r') as f:
+    config = json.load(f)
+
+fuzzdb = config['FuzzDB']['fuzzDBLocation']
 
 def initiate(host):
     scan = subprocess.Popen(["whatweb", host], stdout=subprocess.PIPE)
