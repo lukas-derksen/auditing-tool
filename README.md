@@ -2,7 +2,7 @@
 An Open Source auditing tool, developed as proof of concept for my graduation research assignment. 
 
 ## Research assignment
-The company I work for as an intern wanted me to research the possibility of replacing commercial auditing programs with Open Source tools. Therefore I researched the tools they use, `Acunetix` and `Metasploit Pro`, by looking at their scanresults, documentation and network traffic and by interviewing some of their employees. I then researched what Open Source tooling was available and would come in handy for such a tool. Due to the time I had for this assignment, I chose to use `Python` in development, as it is easy to create powerful tools with in a relatively short time. 
+The company I work for as an intern wanted me to research the possibility of replacing commercial auditing programs with Open Source tools. Therefore I researched the tools they use, `Acunetix` and `Metasploit Pro`, by looking at their scanresults, documentation and network traffic and by interviewing some of their employees. I then researched what Open Source tooling was available and would come in handy for such a tool. Due to the time I had for this assignment, I chose to use `Python` in development, as it is easy to create powerful tools within a relatively short time. 
 
 ## Tools used in this toolkit
 
